@@ -3,7 +3,7 @@ Unit Tests for Calculator
 Students start with 2 passing tests, then add more
 """
 import pytest
-from src.calculator import add, divide, subtract, multiply
+from src.calculator import add, divide, subtract, multiply,power,square_root
 
 class TestBasicOperations:
     """Test basic arithmetic operations"""
@@ -27,6 +27,16 @@ class TestBasicOperations:
         assert subtract(5, 3) == 2
         assert subtract(10, 4) == 6
 
+    def power(a, b): 
+        """Raise a to the power of b""" 
+        return a ** b 
+
+    def square_root(a): 
+        """Calculate square root of a""" 
+        if a < 0: 
+            raise ValueError("Cannot calculate square root of negative number") 
+        return a ** 0.5
+
 class TestMultiplyDivideWithValidation:
     """Test multiplication and division with input validation."""
     
@@ -41,5 +51,31 @@ class TestMultiplyDivideWithValidation:
         """Test divide rejects non-numeric inputs."""
         with pytest.raises(TypeError, match="Division requires numeric inputs"):
             divide("10", 2)
+
+
+class TestAdvancedOperations:
+    """Test power and square root operations"""
+     
+    def test_power_positive_numbers(self):
+        """Test power with positive numbers"""
+        assert power(2, 3) == 8
+        assert power(5, 2) == 25
+     
+    def test_power_zero_exponent(self):
+        """Test power with zero exponent"""
+        assert power(5, 0) == 1
+        assert power(0, 0) == 1
+     
+    def test_square_root_positive_numbers(self):
+        """Test square root of positive numbers"""
+        assert square_root(4) == 2
+        assert square_root(9) == 3
+        assert square_root(16) == 4
+     
+    def test_square_root_negative_raises_error(self):
+        """Test that square root of negative raises
+        ValueError"""
+        with pytest.raises(ValueError, match="Cannot calculate square root of negative"):
+            square_root(-4)
 
 # TODO: Students will add TestMultiplyDivide class
